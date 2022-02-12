@@ -30,6 +30,22 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+       <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+       <script>
+           const firebaseConfig = {
+  apiKey: "AIzaSyAAdTa5VutFHYn2je3VuSEXz2VOejneQX0",
+  authDomain: "dreamcontestcode.firebaseapp.com",
+  databaseURL: "https://dreamcontestcode-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dreamcontestcode",
+  storageBucket: "dreamcontestcode.appspot.com",
+  messagingSenderId: "1003458178114",
+  appId: "1:1003458178114:web:04c897a29636d03bf891db",
+  measurementId: "G-XCTY15ZYXV"
+};
+           firebase.initializeApp(firebaseConfig);
+       </script>
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
