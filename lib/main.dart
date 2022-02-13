@@ -72,10 +72,11 @@ class _MainappState extends State<Mainapp> {
                                   .elementAt(index)['contesturl']
                                   .toString(),
                               universalLinksOnly: true);
-                        } else {}
-                        launch(fd_data.values
-                            .elementAt(index)['contesturl']
-                            .toString());
+                        } else {
+                          launch(fd_data.values
+                              .elementAt(index)['contesturl']
+                              .toString());
+                        }
                       },
                       child: Card(
                         elevation: 5,
