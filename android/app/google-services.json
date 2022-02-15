@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1003458178114:android:fb833529c0584614f891db",
+        "mobilesdk_app_id": "1:1003458178114:android:b5ade8e8d3e14968f891db",
         "android_client_info": {
-          "package_name": "com.developermano.dreampick"
+          "package_name": "com.developermano.dreamprivatecontest"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "1003458178114-g43sue2qmc770qcat32fo8nl8frpmasc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.developermano.dreampick",
-            "certificate_hash": "5923d39cbcc1c5b610916468c506bd55c9b00a1f"
-          }
-        },
         {
           "client_id": "1003458178114-ds7ke9jdcr6mg8b9grl8rhu0k2jqsk56.apps.googleusercontent.com",
           "client_type": 3
