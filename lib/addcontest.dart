@@ -21,7 +21,7 @@ class _AddcontestState extends State<Addcontest> {
     // Load ads.
 
     InterstitialAd.load(
-        adUnitId: InterstitialAd.testAdUnitId,
+        adUnitId: "ca-app-pub-6812988945725571/2482864970",
         request: AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
@@ -91,8 +91,7 @@ class _AddcontestState extends State<Addcontest> {
                         "entryfee": entrycon.text,
                         "totalspot": totalspotcon.text,
                         "contesturl": linkcon.text,
-                        "createat":
-                            DateTime.now().toUtc().microsecondsSinceEpoch
+                        "createat": DateTime.now().millisecondsSinceEpoch
                       });
                       Navigator.pop(context);
                     }

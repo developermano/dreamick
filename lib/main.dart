@@ -24,6 +24,39 @@ class Mainapp extends StatefulWidget {
 }
 
 class _MainappState extends State<Mainapp> {
+  late BannerAd myBanner;
+  bool isloaded = false;
+
+  void initState() {
+    super.initState();
+    myBanner = BannerAd(
+      adUnitId: "ca-app-pub-6812988945725571/9807702797",
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(onAdLoaded: (_) {
+        setState(() {
+          isloaded = true;
+        });
+      }, onAdFailedToLoad: (_, error) {
+        print(error);
+      }),
+    );
+
+    myBanner.load();
+  }
+
+  Widget ad() {
+    if (isloaded == true) {
+      return Container(
+          alignment: Alignment.center,
+          child: AdWidget(ad: myBanner),
+          width: myBanner.size.width.toDouble(),
+          height: myBanner.size.height.toDouble());
+    } else {
+      return Text('ad');
+    }
+  }
+
   void launchlink(String url) {
     if (Platform.isAndroid) {
       launch(url);
@@ -35,6 +68,7 @@ class _MainappState extends State<Mainapp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: ad(),
       appBar: AppBar(
         title: Text("dream private contest"),
       ),
@@ -42,7 +76,8 @@ class _MainappState extends State<Mainapp> {
         stream: FirebaseDatabase.instance
             .ref("contest")
             .orderByChild("createat")
-            .limitToLast(50)
+            .limitToFirst(20)
+            .orderByValue()
             .onValue,
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (snap.hasError) {
@@ -62,75 +97,83 @@ class _MainappState extends State<Mainapp> {
                 itemCount: fd_data.length,
                 itemBuilder: (context, index) {
                   index = fd_data.length - 1 - index;
-                  return Container(
-                    height: 80,
-                    margin: EdgeInsets.all(8),
-                    child: GestureDetector(
-                      onTap: () {
-                        if (Platform.isAndroid) {
-                          launch(
-                              fd_data.values
+                  return Column(
+                    children: [
+                      Container(
+                        height: 80,
+                        margin: EdgeInsets.all(8),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (Platform.isAndroid) {
+                              launch(
+                                  fd_data.values
+                                      .elementAt(index)['contesturl']
+                                      .toString(),
+                                  universalLinksOnly: true);
+                            } else {
+                              launch(fd_data.values
                                   .elementAt(index)['contesturl']
-                                  .toString(),
-                              universalLinksOnly: true);
-                        } else {
-                          launch(fd_data.values
-                              .elementAt(index)['contesturl']
-                              .toString());
-                        }
-                      },
-                      child: Card(
-                        elevation: 5,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "₹" +
+                                  .toString());
+                            }
+                          },
+                          child: Card(
+                            elevation: 5,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "₹" +
+                                            fd_data.values
+                                                .elementAt(index)['entryfee'],
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        "entryfee",
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
                                         fd_data.values
-                                            .elementAt(index)['entryfee'],
-                                    style: TextStyle(fontSize: 18),
+                                            .elementAt(index)['matchname'],
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    ],
                                   ),
-                                  Text(
-                                    "entryfee",
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    fd_data.values
-                                        .elementAt(index)['matchname'],
-                                    style: TextStyle(fontSize: 20),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(right: 8),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    fd_data.values
-                                        .elementAt(index)['totalspot'],
-                                    style: TextStyle(fontSize: 20),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 8),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        fd_data.values
+                                            .elementAt(index)['totalspot'],
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Text("total spot")
+                                    ],
                                   ),
-                                  Text("total spot")
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                      // Container(
+                      //   padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      //   child: ad(),
+                      // )
+                    ],
                   );
                 });
           }
