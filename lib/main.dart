@@ -76,8 +76,7 @@ class _MainappState extends State<Mainapp> {
         stream: FirebaseDatabase.instance
             .ref("contest")
             .orderByChild("createat")
-            .limitToFirst(20)
-            .orderByValue()
+            .limitToLast(5)
             .onValue,
         builder: (BuildContext context, AsyncSnapshot snap) {
           if (snap.hasError) {
